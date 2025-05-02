@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+    </style>
+</head>
+<body class="d-flex justify-content-center align-items-center bg-light" >
+    <div class="col-lg-4">
+        <div class="card shadow">
+            <div class="card-header text-center fw-bold">
+                Login Page !!!
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                    </div>
+            </div>
+            <div class="card-footer">
+                <input type="submit" value="Login" class="btn btn-dark btn-sm">
+                
+                <p >
+                    If you don't have an account, 
+                    <a href="{% url 'Register' %}">Register here</a>.
+                </p>
+                
+
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

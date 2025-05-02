@@ -1,0 +1,52 @@
+{% extends "image/base.html" %}
+{% block title %}
+Profile
+{% endblock title %}
+
+
+{% block content %}
+{% load static %}
+    
+    <!-- container -->
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-4 mt-5">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="card">
+                      <div class="card-header text-bg-dark">
+                        Profile
+                      </div>
+                      <div class="card-body">
+                        <div class="row mb-3">
+                          <div class="col">
+                            <label for="Image" class="form-label">Image</label>
+                            <input class="form-control" required type="file" name="Image" id="Image">
+                          </div>
+                        </div>
+                  
+                        {% if Profileobj.ProfileImgName %}
+                          <div class="row mb-3">
+                            <div class="col mt-2">
+                              <label>Current Image:</label><br>
+                              <img src="{{ Profileobj.ProfileImgName.url }}"  class="mt-2" alt="Profile Image" style="max-height: 50px;min-width:50px; ">
+                            </div>
+                          </div>
+                        {% endif %}
+                      </div>
+                      <div class="card-footer text-end">
+                        <input type="submit" value="Update" class="btn btn-dark">
+                      </div>
+                    </div>
+                  </form>
+                              </div>
+        </div>
+     </div>
+    <!-- End container -->
+
+
+{% endblock content %}
+
+
+
+

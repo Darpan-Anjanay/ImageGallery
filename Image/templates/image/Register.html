@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+    </style>
+</head>
+<body class="d-flex justify-content-center align-items-center bg-light" >
+    <div class="col-lg-4">
+        <div class="card shadow">
+            <div class="card-header text-center fw-bold">
+                Register Page !!!
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmpassword" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirmpassword" name="confirmpassword">
+                    </div>
+                    {% for message in  messages %}
+                    <span style="color: red;">{{message}}</span>
+                    {% endfor %}
+            </div>
+            <div class="card-footer">
+                {% csrf_token %}
+
+                <input type="submit" value="Register" class="btn btn-dark btn-sm">
+                <br>
+                <p>
+                    If you already have an account, 
+                    <a href="{% url 'Login' %}">Login here</a>.
+                </p>
+                     
+            </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

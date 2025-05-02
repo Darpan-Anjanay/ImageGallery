@@ -1,0 +1,98 @@
+{% extends "image/base.html" %}
+{% block title %}
+Trash
+{% endblock title %}
+
+{% block content %}
+<div class="container-fluid">
+  {% if Images %}  
+  <div class="col-lg-6">
+    <form action="{% url 'BulkAction' %}" method="post" class="row">
+      
+      <div class="col-lg-3 mt-4">
+        <input type="checkbox" class="btn-check" id="btn-check-outlined" name="Select" autocomplete="off">
+        <label class="btn btn-outline-dark btn-sm" for="btn-check-outlined">Select</label>
+      </div>
+
+     
+
+      <div class="col-lg-3 mt-4 option" style="display: none;">
+        <input type="hidden" name="Imgidlist" id="Imgidlist" value="[]">
+        <input type="hidden" name="Page" value="Trash">
+
+        {% csrf_token %}
+        <input type="submit" name="Action" value="Delete" class="btn btn-danger btn-sm" id="optionbutton">
+      </div>
+
+    </form>
+  </div>  
+  {% endif %}
+
+    <div class="row justify-content-start">
+        {% for Img in Images %}
+          <div class="col-lg-2 col-4 mt-4 mb-4">
+            <a href="{% url 'TrashImageView' %}?i={{Img.id}}">
+              <div class="square-box">
+                <img src="{{ Img.Image.url }}" alt="" class="rounded">
+                
+              </div>
+            </a>
+            <input type="checkbox" class="form-check-control mt-2 Imgid" style="color: black; font-size: 16px; display: none;" value="{{ Img.id }}">
+          </div>
+
+        {% endfor %}
+      </div>
+</div>
+<script>
+  const select = document.getElementById('btn-check-outlined');
+  const hiddenField = document.getElementById('Imgidlist');
+  const checkboxes = document.querySelectorAll('.Imgid');
+  const option = document.querySelectorAll('.option');
+  
+  let isVisible = false; 
+
+  hiddenField.value = JSON.stringify([]);
+
+  if (select) {
+      select.addEventListener('click', function () {
+          isVisible = !isVisible;
+
+          option.forEach(opt => {
+              opt.style.display = isVisible ? 'block' : 'none';
+          });
+
+          checkboxes.forEach(checkbox => {
+              checkbox.style.display = isVisible ? 'block' : 'none';
+
+              if (!isVisible) {
+                  checkbox.checked = false;
+              }
+          });
+
+          if (!isVisible) {
+              hiddenField.value = JSON.stringify([]);
+              console.log('Checkboxes hidden, ImgId list cleared');
+          }
+      });
+  }
+
+  checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', function () {
+          let selectedIds = JSON.parse(hiddenField.value || '[]');
+
+          if (this.checked) {
+              if (!selectedIds.includes(this.value)) {
+                  selectedIds.push(this.value);
+              }
+          } else {
+              selectedIds = selectedIds.filter(id => id !== this.value);
+          }
+
+          hiddenField.value = JSON.stringify(selectedIds);
+          console.log('Selected IDs:', selectedIds);
+      });
+  });
+</script>
+
+{% endblock content %}
+

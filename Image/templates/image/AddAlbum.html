@@ -1,0 +1,44 @@
+{% extends "image/base.html" %}
+{% block title %}
+Add Album
+{% endblock title %}
+
+
+{% block content %}
+{% load static %}
+
+
+
+    <!-- container -->
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-4 mt-5">
+              <form action="" method="post">
+                <div class="card">
+                  <div class="card-header text-bg-dark">
+                      Add Album
+                  </div>
+                  <div class="card-main">
+                        <div class="row m-2">
+                          
+                          <div class="col">
+                              <label for="Album Name">Album Name</label>
+                              <input class="form-control" name="AlbumName" type="text" id="form-control">
+                          </div>
+                        </div>
+                  </div>
+                  <div class="card-footer ">
+                    {% csrf_token %}  
+                    <input type="submit" value="Add" class="btn btn-dark">
+                  </div>
+                </div>
+              </form>
+
+            </div>
+        </div>
+     </div>
+    <!-- End container -->
+
+{% endblock content %}
+
+

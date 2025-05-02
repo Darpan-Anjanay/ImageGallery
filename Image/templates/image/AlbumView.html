@@ -1,0 +1,130 @@
+{% extends "image/base.html" %}
+{% block title %}
+Album View
+{% endblock title %}
+
+{% block content %}
+{% load static %}
+
+    <!-- container -->
+    <div class="container-fluid">
+        <div class="row ">
+          <div class="col-lg-4 mt-2">
+                  <div class="card">
+                    <div class="card-header text-center bg-dark text-white">
+                      {{album.AlbumName}}
+                    </div>
+                  </div>
+            
+          </div>
+          <div class="col-lg-6">
+            <form action="{% url 'BulkAction' %}" method="post" class="row">
+                  
+              <div class="col-lg-3 mt-2">
+                <input type="checkbox" class="btn-check" id="btn-check-outlined" name="Select" autocomplete="off">
+                <label class="btn btn-outline-dark" for="btn-check-outlined">Select</label>
+              </div>
+        
+              <div class="col-lg-4 mt-2 option" style="display: none;">
+                <select name="Action" class="form-select" required>
+                  <option value="">Options</option>
+                  <option value="Trash">Move To :-Trash</option>
+                  
+                  
+                    {% for Album in Albums  %}
+                    <option value="M-{{Album.id}}">Move To :-{{Album.AlbumName}}</option>
+                    {% endfor %}
+                </select>
+              </div>
+        
+              <div class="col-lg-3 mt-2 option" style="display: none;">
+                <input type="hidden" name="Imgidlist" id="Imgidlist" value="[]">
+                <input type="hidden" name="Page" value="AlbumView">
+                <input type="hidden" name="aid" value="{{aid}}">
+
+
+                {% csrf_token %}
+                <input type="submit" value="Submit" class="btn btn-dark" id="optionbutton">
+              </div>
+        
+            </form>
+          </div>
+          <div class="col-lg-2 mt-2">
+            <a href="{% url 'Upload' %}?aid={{album.id}}"  class =  "btn btn-dark " >Upload Image</a>
+
+        </div>
+        </div>
+        <div class="row justify-content-start">
+          
+          {% for Img in Images %}
+          <div class="col-lg-2 col-4 mt-4 mb-4">
+            <a href="{% url 'ImageView' %}?aid={{album.id}}&i={{Img.id}}">
+              <div class="square-box">
+                <img src="{{ Img.Image.url }}" alt="" class="rounded ">
+                
+              </div>
+            </a>
+            <input type="checkbox" class="form-check-control mt-2 Imgid" style="color: black; font-size: 16px; display: none;" value="{{ Img.id }}">
+          </div>
+        {% endfor %}
+        
+        </div>
+      </div>  
+
+     </div>
+
+     <script>
+      const select = document.getElementById('btn-check-outlined');
+      const hiddenField = document.getElementById('Imgidlist');
+      const checkboxes = document.querySelectorAll('.Imgid');
+      const option = document.querySelectorAll('.option');
+      
+      let isVisible = false; 
+  
+      hiddenField.value = JSON.stringify([]);
+  
+      if (select) {
+          select.addEventListener('click', function () {
+              isVisible = !isVisible;
+  
+              option.forEach(opt => {
+                  opt.style.display = isVisible ? 'block' : 'none';
+              });
+  
+              checkboxes.forEach(checkbox => {
+                  checkbox.style.display = isVisible ? 'block' : 'none';
+  
+                  if (!isVisible) {
+                      checkbox.checked = false;
+                  }
+              });
+  
+              if (!isVisible) {
+                  hiddenField.value = JSON.stringify([]);
+                  console.log('Checkboxes hidden, ImgId list cleared');
+              }
+          });
+      }
+  
+      checkboxes.forEach(checkbox => {
+          checkbox.addEventListener('change', function () {
+              let selectedIds = JSON.parse(hiddenField.value || '[]');
+  
+              if (this.checked) {
+                  if (!selectedIds.includes(this.value)) {
+                      selectedIds.push(this.value);
+                  }
+              } else {
+                  selectedIds = selectedIds.filter(id => id !== this.value);
+              }
+  
+              hiddenField.value = JSON.stringify(selectedIds);
+              console.log('Selected IDs:', selectedIds);
+          });
+      });
+  </script>
+  
+    <!-- End container -->
+
+
+{% endblock content %}
