@@ -7,7 +7,7 @@ import os
 
 # Profile 
 class Profile(models.Model):
-    User = models.ForeignKey(User,on_delete=models.CASCADE)
+    User = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     ProfileImgName  =  models.ImageField( upload_to = 'Profile')
 
 # Album

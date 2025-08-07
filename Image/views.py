@@ -67,7 +67,7 @@ def ProfileUpdate(request):
         else:
             Profileobj = Profile.objects.create(User=user,ProfileImgName=ProfileImg)
         return redirect('Home')
-    context = {'Profileobj':Profileobj,'profile':Profileobj}
+    context = {'Profileobj':Profileobj}
     return render(request,'image/Profile.html',context)
 
 
@@ -75,11 +75,11 @@ def ProfileUpdate(request):
 @login_required(login_url='Login')
 def Home(request):
     user = request.user
-    profile = Profile.objects.filter(User=user).first()
+
     Albums = Album.objects.filter(User=user)
     Images = Image.objects.filter(SoftDelete=False,Trash=False,User=user)
     
-    context = {'user':user,'Albums':Albums,'profile':profile,'Images':Images}
+    context = {'user':user,'Albums':Albums,'Images':Images}
     return render(request,'image/Home.html',context)
 
 
@@ -87,7 +87,7 @@ def Home(request):
 @login_required(login_url='Login')
 def ImageView(request):
     user = request.user
-    profile = Profile.objects.filter(User=user).first()
+   
     aid = request.GET.get('aid')
     image_id_str = request.GET.get('i')
 
@@ -128,7 +128,7 @@ def ImageView(request):
 
     context = {
         'user': user,
-        'profile': profile,
+     
         'current_image': current_image,
         'previous_image': previous_image,
         'next_image': next_image,
@@ -143,7 +143,7 @@ def ImageView(request):
 @login_required(login_url='Login')
 def AlbumView(request):
     user = request.user
-    profile = Profile.objects.filter(User=user).first()
+  
     
     aid  = request.GET.get('aid')
     album = Album.objects.filter(User=user,id=aid).first()
@@ -151,21 +151,21 @@ def AlbumView(request):
     
     Images = Image.objects.filter(SoftDelete=False,Trash=False,User=user,Album=album)
 
-    context = {'user':user,'profile':profile,'album':album,'Images':Images,'Albums':Albums,'aid':aid}
+    context = {'user':user,'album':album,'Images':Images,'Albums':Albums,'aid':aid}
     return render(request,'image/AlbumView.html',context)
 
 # Add Album
 @login_required(login_url='Login')
 def AddAlbum(request):
     user = request.user
-    profile = Profile.objects.filter(User=user).first()
+   
     if request.method == "POST":
         AlbumName = request.POST['AlbumName']
        
         newAlbum = Album.objects.create(User=user,AlbumName = AlbumName)
         return redirect('Home')
 
-    context = {'user':user,'profile':profile}
+    context = {'user':user}
     return render(request,'image/AddAlbum.html',context)
 
 
@@ -187,7 +187,7 @@ def DeleteAlbum(request):
 @login_required(login_url='Login')
 def Upload(request):
     user = request.user
-    profile = Profile.objects.filter(User=user).first()
+   
     Albums = Album.objects.filter(User=user)
     aid  = request.GET.get('aid')
 
@@ -201,7 +201,7 @@ def Upload(request):
         else:
             return redirect('Home')
 
-    context = {'user':user,'profile':profile,'Albums':Albums,'aid':int(aid) if aid  is not None else None}    
+    context = {'user':user,'Albums':Albums,'aid':int(aid) if aid  is not None else None}    
     return render(request,'image/Upload.html',context)
 
 # Image Delete 
@@ -286,9 +286,9 @@ def BulkAction(request):
 @login_required(login_url='Login')
 def Trash(request):
     user = request.user
-    profile = Profile.objects.filter(User=user).first()
+   
     Images = Image.objects.filter(SoftDelete=False,Trash=True,User=user)
-    context = {'user':user,'profile':profile,'Images':Images}
+    context = {'user':user,'Images':Images}
     return render(request,'image/Trash.html',context)
 
 
@@ -296,7 +296,7 @@ def Trash(request):
 @login_required(login_url='Login')
 def TrashImageView(request):
     user = request.user
-    profile = Profile.objects.filter(User=user).first()
+   
     Images = Image.objects.filter(SoftDelete=False,Trash=True,User=user)
     image_id_str = request.GET.get('i')
     
@@ -332,7 +332,7 @@ def TrashImageView(request):
     
     context = {
         'user': user,
-        'profile': profile,
+   
         'current_image': current_image,
         'previous_image': previous_image,
         'next_image': next_image,
