@@ -26,6 +26,7 @@ def Login(request):
 def Register(request):
     if request.method == "POST":
         username = request.POST.get('username')
+        email = request.POST.get('email')
         password = request.POST.get('password')
         confirmpassword = request.POST.get('confirmpassword')
         
@@ -37,7 +38,7 @@ def Register(request):
             messages.error(request, "User already exists.")
             return render(request, 'image/Register.html')
 
-        user = User.objects.create_user(username=username, password=password)
+        user = User.objects.create_user(username=username, password=password,email=email)
         user.save()
         
         login(request, user)

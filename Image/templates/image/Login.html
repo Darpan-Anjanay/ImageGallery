@@ -62,8 +62,10 @@
                     {% endif %}
                     <div class="d-grid gap-2 text-center">
                         <input type="submit" value="Login" class="btn btn-primary">
-                        
-                        <p class="m-3">
+                        <div class="mb-2 text-end ">
+                            <a href="{% url 'password_reset' %}" class="small text-black">Forgot password?</a>
+                            </div>
+                        <p class="m-2">
                             Don't have an account?
                         </p>
                         

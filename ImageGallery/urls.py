@@ -23,6 +23,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
+admin.site.site_header = 'Image Gallery'
+admin.site.site_title = 'Image Gallery'
+admin.site.index_title = 'Image Gallery Dashboard'
+
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('Image.urls')),
