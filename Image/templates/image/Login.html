@@ -4,44 +4,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login - Image Gallery</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    
     <style>
-        body, html {
-            height: 100%;
-            margin: 0;
+        .bg-primary,
+        .btn-primary {
+            background-color: rgba(38, 0, 255, 0.6) !important;
+            color: white;
+            border: none;
+        }
+
+        .bg-image {
+            background-image: url("{% static 'images/Background/bg-1.jpg' %}");
+            background-size: cover;
+            background-position: center;
         }
     </style>
 </head>
-<body class="d-flex justify-content-center align-items-center bg-light" >
-    <div class="col-lg-4">
-        <div class="card shadow">
-            <div class="card-header text-center fw-bold">
-                Login Page !!!
+
+<body class="bg-image">
+    <div class="container-fluid vh-100 d-flex justify-content-center align-items-center">
+        <div class="row w-100 shadow-lg rounded overflow-hidden" style="max-width: 1000px;">
+
+           
+            <div class="col-md-6 d-flex align-items-center text-white bg-primary">
+                <div class="p-4">
+                    <h1 class="display-6 fw-bold">Welcome to Image Gallery</h1>
+                    <p class="lead">Store, organize, and relive your memories with albums like Google Photos.</p>
+                    <p>Secure. Simple. Beautiful.</p>
+                </div>
             </div>
-            <div class="card-body">
+
+        
+            <div class="col-md-6 bg-white p-4">
+                <h2 class="fw-bold mb-4">Login</h2>
                 <form method="post">
                     {% csrf_token %}
+                    
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" name="username">
+                        <input type="text" class="form-control" id="username" name="username" required>
                     </div>
+                    
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password">
+                        <input type="password" class="form-control" id="password" name="password" required>
                     </div>
-            </div>
-            <div class="card-footer">
-                <input type="submit" value="Login" class="btn btn-dark btn-sm">
-                
-                <p >
-                    If you don't have an account, 
-                    <a href="{% url 'Register' %}">Register here</a>.
-                </p>
-                
-
+                    {% if messages %}
+                        <div class="mb-3">
+                            {% for message in messages %}
+                                <div class="alert alert-danger py-1 px-2 mb-1" role="alert">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <div class="d-grid gap-2 text-center">
+                        <input type="submit" value="Login" class="btn btn-primary">
+                        
+                        <p class="m-3">
+                            Don't have an account?
+                        </p>
+                        
+                        <a href="{% url 'Register' %}" class="btn btn-primary btn-sm">Register here</a>
+                    </div>
                 </form>
             </div>
+
         </div>
     </div>
 </body>

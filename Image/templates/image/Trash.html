@@ -5,23 +5,33 @@ Trash
 
 {% block content %}
 <div class="container-fluid">
+  <div class="col-lg-4 mt-2">
+                  <div class="card">
+                    <div class="card-header text-center bg-primary text-white">
+                   Trash
+                    </div>
+                  </div>
+                 
+          </div>
   {% if Images %}  
   <div class="col-lg-6">
     <form action="{% url 'BulkAction' %}" method="post" class="row">
       
-      <div class="col-lg-3 mt-4">
+      <div class="col-auto mt-4">
         <input type="checkbox" class="btn-check" id="btn-check-outlined" name="Select" autocomplete="off">
-        <label class="btn btn-outline-dark btn-sm" for="btn-check-outlined">Select</label>
+        <label class="btn btn-outline-primary btn-sm" for="btn-check-outlined">Select</label>
       </div>
 
      
 
-      <div class="col-lg-3 mt-4 option" style="display: none;">
+      <div class="col-auto mt-4 option" style="display: none;">
         <input type="hidden" name="Imgidlist" id="Imgidlist" value="[]">
         <input type="hidden" name="Page" value="Trash">
 
         {% csrf_token %}
-        <input type="submit" name="Action" value="Delete" class="btn btn-danger btn-sm" id="optionbutton">
+        <input type="submit" name="Action" value="Delete" class="btn btn-danger btn-sm ">
+        <input type="submit" name="Action" value="Restore" class="btn btn-success btn-sm ">
+
       </div>
 
     </form>

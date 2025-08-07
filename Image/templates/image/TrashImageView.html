@@ -6,41 +6,59 @@ Trash Image View
 
 {% block content %}
 {% load static %}
-<div class="container-fluid">
+
+<div class="container-fluid ">
     <div class="row justify-content-center">
-        <div class="col-lg-8 mt-5 text-center">
+        <div class="col-lg-8 text-center">
 
             {% if current_image %}
-            <img src="{{ current_image.Image.url }}" class="img-fluid rounded mb-4" style="max-height: 500px;" alt="Image {{ current_image.id }}">
+           
+                <img src="{{ current_image.Image.url }}"
+                     class="img-fluid rounded mb-4 shadow"
+                     style="max-height: 400px;"
+                     alt="Image {{ current_image.id }}">
 
-            <div class="row">
-                <div class="col-md-6 text-start">
-                    <span class="bg-dark text-white rounded p-2">Size: {{ current_image.size_mb|floatformat:3 }} MB</span>
-                    <span class="bg-dark text-white rounded p-2">Created Date: {{ current_image.Created_at }}</span>
-                    <span>
-                      
-                        <a href="{% url 'TrashDel' %}?Imid={{ Img.id }}"
-                        class="btn btn-danger btn-sm mt-0"
-                        onclick="return confirm('Are you sure you want to permanent delete this image?');">
+             
+                <div class="d-flex justify-content-between align-items-center flex-wrap mb-3 px-2">
+
+                    <div class="d-flex flex-wrap gap-2">
+                        <span class="bg-primary text-white rounded px-3 py-1">
+                            Size: {{ current_image.size_mb|floatformat:3 }} MB
+                        </span>
+                        <span class="bg-primary text-white rounded px-3 py-1">
+                            Created Date: {{ current_image.Created_at }}
+                        </span>
+                    </div>
+
+                    <a href="{% url 'TrashDel' %}?Imid={{ current_image.id }}{% if aid is not None %}&aid={{ aid }}{% endif %}"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('Are you sure you want to delete this image?');">
                         Delete
-                        </a>
-
-                    </span>
-
+                    </a>
                 </div>
-                <div class="col-md-6 text-end">
+
+              
+                <div class="d-flex justify-content-between">
                     {% if previous_image %}
-                    <a href="{% url 'TrashImageView' %}?i={{ previous_image.id }}{% if aid is not None %}&aid={{ aid }}{% endif %}" class="btn btn-primary me-2">Previous</a>
+                        <a href="{% url 'TrashImageView' %}?i={{ previous_image.id }}{% if aid is not None %}&aid={{ aid }}{% endif %}"
+                           class="btn btn-primary">
+                            &larr; Previous
+                        </a>
+                    {% else %}
+                        <span></span>
                     {% endif %}
 
                     {% if next_image %}
-                    <a href="{% url 'TrashImageView' %}?i={{ next_image.id }}{% if aid is not None %}&aid={{ aid }}{% endif %}" class="btn btn-primary ms-2">Next</a>
+                        <a href="{% url 'TrashImageView' %}?i={{ next_image.id }}{% if aid is not None %}&aid={{ aid }}{% endif %}"
+                           class="btn btn-primary">
+                            Next &rarr;
+                        </a>
                     {% endif %}
-
                 </div>
-            </div>
             {% else %}
-            <p>No image found.</p>
+                <div class="alert alert-warning mt-4" role="alert">
+                    No image found.
+                </div>
             {% endif %}
 
         </div>

@@ -11,21 +11,21 @@ Album View
         <div class="row ">
           <div class="col-lg-4 mt-2">
                   <div class="card">
-                    <div class="card-header text-center bg-dark text-white">
+                    <div class="card-header text-center bg-primary text-white">
                       {{album.AlbumName}}
                     </div>
                   </div>
-            
+                 
           </div>
-          <div class="col-lg-6">
+          <div class="col-auto">
             <form action="{% url 'BulkAction' %}" method="post" class="row">
                   
-              <div class="col-lg-3 mt-2">
+              <div class="col-auto mt-2">
                 <input type="checkbox" class="btn-check" id="btn-check-outlined" name="Select" autocomplete="off">
-                <label class="btn btn-outline-dark" for="btn-check-outlined">Select</label>
+                <label class="btn btn-primary" for="btn-check-outlined">Select</label>
               </div>
         
-              <div class="col-lg-4 mt-2 option" style="display: none;">
+              <div class="col-auto mt-2 option" style="display: none;">
                 <select name="Action" class="form-select" required>
                   <option value="">Options</option>
                   <option value="Trash">Move To :-Trash</option>
@@ -37,20 +37,20 @@ Album View
                 </select>
               </div>
         
-              <div class="col-lg-3 mt-2 option" style="display: none;">
+              <div class="col-auto mt-2 option" style="display: none;">
                 <input type="hidden" name="Imgidlist" id="Imgidlist" value="[]">
                 <input type="hidden" name="Page" value="AlbumView">
                 <input type="hidden" name="aid" value="{{aid}}">
 
 
                 {% csrf_token %}
-                <input type="submit" value="Submit" class="btn btn-dark" id="optionbutton">
+                <input type="submit" value="Submit" class="btn btn-primary" id="optionbutton">
               </div>
         
             </form>
           </div>
-          <div class="col-lg-2 mt-2">
-            <a href="{% url 'Upload' %}?aid={{album.id}}"  class =  "btn btn-dark " >Upload Image</a>
+          <div class="col-auto mt-2">
+            <a href="{% url 'Upload' %}?aid={{album.id}}"  class =  "btn btn-primary " >Upload Image</a>
 
         </div>
         </div>
@@ -66,6 +66,9 @@ Album View
             </a>
             <input type="checkbox" class="form-check-control mt-2 Imgid" style="color: black; font-size: 16px; display: none;" value="{{ Img.id }}">
           </div>
+          {% empty %}
+          <a href="{% url 'DeleteAlbum' %}?id={{album.id}}" class="btn btn-danger col-auto m-2">Delete Album</a>
+            
         {% endfor %}
         
         </div>

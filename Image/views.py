@@ -18,6 +18,7 @@ def Login(request):
             login(request,user)
             return redirect('Home')
         else:
+            messages.warning(request,'Invalid credentials')
             return redirect('Login')
     return render(request,'image/Login.html')
 
@@ -66,7 +67,7 @@ def ProfileUpdate(request):
         else:
             Profileobj = Profile.objects.create(User=user,ProfileImgName=ProfileImg)
         return redirect('Home')
-    context = {'Profileobj':Profileobj}
+    context = {'Profileobj':Profileobj,'profile':Profileobj}
     return render(request,'image/Profile.html',context)
 
 
@@ -168,6 +169,20 @@ def AddAlbum(request):
     return render(request,'image/AddAlbum.html',context)
 
 
+
+# Delete Album
+@login_required(login_url='Login')
+def DeleteAlbum(request):
+    user = request.user
+    id  = request.GET.get('id')
+    album = Album.objects.filter(User=user,id=id)
+    if album.exists():
+        album.first().delete()
+        return redirect('Home')
+
+
+
+
 # Upload
 @login_required(login_url='Login')
 def Upload(request):
@@ -230,6 +245,17 @@ def BulkAction(request):
                         print(f"Image with id {id} does not exist.")
                     except Exception as e:
                         print(f"Error processing image ID {id}: {e}")
+            if Action == 'Restore':
+                for id in Imgidlist:
+                    try:
+                        img = Image.objects.get(id=int(id)) 
+                        img.Trash = False
+                        img.save()
+                    except Image.DoesNotExist:
+                        print(f"Image with id {id} does not exist.")
+                    except Exception as e:
+                        print(f"Error processing image ID {id}: {e}")
+
             if Action == 'Delete':
                 for id in Imgidlist:
                     try:
@@ -325,3 +351,10 @@ def TrashDel(request):
         img.SoftDelete = True
         img.save()
         return redirect('TrashImageView')
+
+
+
+
+
+
+ 

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import Home,ImageView,AlbumView,AddAlbum,Upload,ImgDel,Trash,TrashImageView,TrashDel,BulkAction,Login,Logout,ProfileUpdate,Register
+from .views import Home,ImageView,AlbumView,AddAlbum,Upload,ImgDel,Trash,TrashImageView,TrashDel,BulkAction,Login,Logout,ProfileUpdate,Register,DeleteAlbum
 urlpatterns = [
     path('',Home,name='Home'),
 
@@ -16,6 +16,8 @@ urlpatterns = [
     
     path('AddAlbum/',AddAlbum,name='AddAlbum'),
     path('AlbumView/',AlbumView,name='AlbumView'),
+    path('DeleteAlbum/',DeleteAlbum,name='DeleteAlbum'),
+
     
     path('Trash/',Trash,name='Trash'),
     path('TrashImageView/',TrashImageView,name='TrashImageView'),

@@ -7,49 +7,59 @@
     <div class="container-fluid">
     
         <div class="row">
-          <div class="col-lg-2 col-md-4 mt-4">
-            <div class="card  mb-3" >
-              <div class="card-header text-bg-dark">
-               Albums
-              </div>
-              <ul class="list-group list-group-flush">
-               {% for Album in Albums  %}
-               
-               <li class="list-group-item">
-                <a href="{% url 'AlbumView' %}?aid={{Album.id}}" style="text-decoration: none; color: black; font-weight: bold;">{{Album.AlbumName}}</a>
-              </li>
-               {% endfor %} 
-               
-                <li class="list-group-item"><a href="{% url 'Trash' %}" style="text-decoration: none; color: black; font-weight: bold;">Trash</a></li>
+          <div class="col-lg-2 col-md-2 mt-4">
+            <div class="accordion mb-3" id="albumAccordion">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingAlbums">
+                  <button class="accordion-button bg-primary text-white " type="button" data-bs-toggle="collapse" data-bs-target="#collapseAlbums" aria-expanded="true" aria-controls="collapseAlbums">
+                    Albums
+                  </button>
+                </h2>
 
-                
-              </ul>
-              <div class="card-footer">
-                <a href="{% url 'AddAlbum' %}"  class = "btn btn-dark mt-2" >Add Album</a>
-                <a href="{% url 'Upload' %}"  class =  "btn btn-dark mt-2" >Upload Image</a>
-  
+                <div id="collapseAlbums" class="accordion-collapse collapse show " aria-labelledby="headingAlbums" data-bs-parent="#albumAccordion">
+                  <div class="accordion-body p-0">
+                    <ul class="list-group list-group-flush">
+                      {% for Album in Albums %}
+                      <li class="list-group-item">
+                        <a href="{% url 'AlbumView' %}?aid={{Album.id}}" class="text-decoration-none text-dark fw-bold">{{ Album.AlbumName }}</a>
+                      </li>
+                      {% endfor %}
+                      <li class="list-group-item">
+                        <a href="{% url 'Trash' %}" class="text-decoration-none text-dark fw-bold">Trash</a>
+                      </li>
+                    </ul>
+
+                    <div class="d-flex flex-column p-3">
+                      <a href="{% url 'AddAlbum' %}" class="btn btn-primary mt-2">Add Album</a>
+                      <a href="{% url 'Upload' %}" class="btn btn-primary mt-2">Upload Image</a>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+
           </div>
+
+
           <div class="col-lg-10">
             <div class="row justify-content-start">
   
               <div class="col-lg-6">
                 <form action="{% url 'BulkAction' %}" method="post" class="row">
                   
-                  <div class="col-lg-3 mt-4">
+                  <div class="col-auto mt-4">
                     <input type="checkbox" class="btn-check" id="btn-check-outlined" name="Select" autocomplete="off">
-                    <label class="btn btn-outline-dark" for="btn-check-outlined">Select</label>
+                    <label class="btn btn-primary" for="btn-check-outlined">Select</label>
                   </div>
             
                  
             
-                  <div class="col-lg-3 mt-4 option" style="display: none;">
+                  <div class="col-auto mt-4 option" style="display: none;">
                     <input type="hidden" name="Imgidlist" id="Imgidlist" value="[]">
                     <input type="hidden" name="Page" value="Home">
 
                     {% csrf_token %}
-                    <input type="submit" name="Action" value="Trash" class="btn btn-dark" id="optionbutton">
+                    <input type="submit" name="Action" value="Trash" class="btn btn-primary" id="optionbutton">
                   </div>
             
                 </form>
