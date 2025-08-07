@@ -8,7 +8,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import login,logout,authenticate
 from django.contrib import messages
 
-
+# Login
 def Login(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -21,7 +21,7 @@ def Login(request):
             return redirect('Login')
     return render(request,'image/Login.html')
 
-
+# Regsiter
 def Register(request):
     if request.method == "POST":
         username = request.POST.get('username')
@@ -46,14 +46,14 @@ def Register(request):
     return render(request, 'image/Register.html')  
 
 
-
+ # Logout
 @login_required(login_url='Login')
 def Logout(request):
     logout(request)
     return redirect('Login')
 
 
-
+# Profile Update
 @login_required(login_url='Login')
 def ProfileUpdate(request):
     user = request.user
@@ -70,7 +70,7 @@ def ProfileUpdate(request):
     return render(request,'image/Profile.html',context)
 
 
-
+# Home
 @login_required(login_url='Login')
 def Home(request):
     user = request.user
@@ -82,7 +82,7 @@ def Home(request):
     return render(request,'image/Home.html',context)
 
 
-
+# Image  View
 @login_required(login_url='Login')
 def ImageView(request):
     user = request.user
@@ -138,7 +138,7 @@ def ImageView(request):
 
 
 
-
+# Album View
 @login_required(login_url='Login')
 def AlbumView(request):
     user = request.user
@@ -153,7 +153,7 @@ def AlbumView(request):
     context = {'user':user,'profile':profile,'album':album,'Images':Images,'Albums':Albums,'aid':aid}
     return render(request,'image/AlbumView.html',context)
 
-
+# Add Album
 @login_required(login_url='Login')
 def AddAlbum(request):
     user = request.user
@@ -168,7 +168,7 @@ def AddAlbum(request):
     return render(request,'image/AddAlbum.html',context)
 
 
-
+# Upload
 @login_required(login_url='Login')
 def Upload(request):
     user = request.user
@@ -189,6 +189,7 @@ def Upload(request):
     context = {'user':user,'profile':profile,'Albums':Albums,'aid':int(aid) if aid  is not None else None}    
     return render(request,'image/Upload.html',context)
 
+# Image Delete 
 @login_required(login_url='Login')
 def ImgDel(request):
     Imid =  request.GET.get('Imid')
@@ -203,7 +204,7 @@ def ImgDel(request):
         else:
             return redirect('ImageView')
 
-
+# Bulk Action
 @login_required(login_url='Login')
 def BulkAction(request):
          
@@ -255,7 +256,7 @@ def BulkAction(request):
 
 
 
-
+# Trash
 @login_required(login_url='Login')
 def Trash(request):
     user = request.user
@@ -265,7 +266,7 @@ def Trash(request):
     return render(request,'image/Trash.html',context)
 
 
-
+# Trash Image 
 @login_required(login_url='Login')
 def TrashImageView(request):
     user = request.user
@@ -313,7 +314,7 @@ def TrashImageView(request):
     }
     return render(request,'image/TrashImageView.html',context)
 
-
+# Trash Delete
 @login_required(login_url='Login')
 def TrashDel(request):
     Imid =  request.GET.get('Imid')

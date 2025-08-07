@@ -5,18 +5,19 @@ import os
 
 
 
-
+# Profile 
 class Profile(models.Model):
     User = models.ForeignKey(User,on_delete=models.CASCADE)
     ProfileImgName  =  models.ImageField( upload_to = 'Profile')
 
+# Album
 class Album(models.Model):
     User = models.ForeignKey(User,on_delete=models.CASCADE)
     AlbumName = models.CharField(max_length=255,null=False,blank=False)
     def __str__(self):
         return self.AlbumName
 
-
+# Image
 class Image(models.Model):
     User = models.ForeignKey(User,on_delete=models.CASCADE)
     Image = models.ImageField( upload_to = 'Images')

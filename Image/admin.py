@@ -2,6 +2,8 @@ from django.contrib import admin
 from .models import Profile,Album,Image
 from django.utils.html import format_html
 
+
+# Profile Admin
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ['ProfileImgTag','User']
     def ProfileImgTag(self,obj):
@@ -11,13 +13,13 @@ class ProfileAdmin(admin.ModelAdmin):
             return 'Not Present'
 admin.site.register(Profile,ProfileAdmin)
 
-
+# Album Admin
 class AlbumAdmin(admin.ModelAdmin):
     list_display = ['User','AlbumName']
 
 admin.site.register(Album,AlbumAdmin)
 
-
+# Image Admin
 class ImageAdmin(admin.ModelAdmin):
     list_display = [
     'User','ImgTag','Album','Created_at','Modified_at','SoftDelete','Trash']
