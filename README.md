@@ -21,7 +21,7 @@ User Authentication (Register, Login, Logout, Profile Update)
 - **Other:** Django Messages Framework, Static Files
 
 
-##  Installation Guide for To do App Project
+##  Installation Guide for Image Gallery
 
 ### 1. Clone the repository
 git clone https://github.com/Darpan-Anjanay/ImageGallery.git  # Download the project from GitHub
